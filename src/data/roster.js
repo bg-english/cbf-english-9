@@ -24,7 +24,7 @@ export const roster = {
   'juansanchez@redboston.edu.co':        { name: 'Sánchez Rojas Juan Sebastián',         section: 'RED' },
   'juansanchez2@redboston.edu.co':       { name: 'Sarmiento Bojano Mateo',               section: 'RED' },
   'sofiavitola@redboston.edu.co':        { name: 'Vitola Carrascal Sofía',               section: 'RED' },
-  'alejandreypes@redboston.edu.co':      { name: 'Yepes Pacheco Alejandro David',        section: 'RED' },
+  'alejandroyepes@redboston.edu.co':     { name: 'Yepes Pacheco Alejandro David',        section: 'RED' },
 
   // ── 9° BLUE ─────────────────────────────────────────────────────────────────
   'josueabudinen@redboston.edu.co':        { name: 'Abudinen Quintero Josué',              section: 'BLUE' },
