@@ -20,8 +20,8 @@
   --radius:      12px;
   --shadow:      0 4px 24px rgba(26,39,68,0.12);
   --shadow-warm: 0 4px 24px rgba(204,41,54,0.08);
-  --font-display:'Playfair Display', serif;
-  --font-body:   'DM Sans', sans-serif;
+  --font-display:'Poppins', sans-serif;
+  --font-body:   'Nunito', sans-serif;
   --font-mono:   'DM Mono', monospace;
 }
 
