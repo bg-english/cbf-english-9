@@ -175,9 +175,10 @@ async function withRetry(fn, retries = 3, delayMs = 2000) {
   throw lastError
 }
 
-export function sendLoginNotification({ name, email }) {
+export function sendLoginNotification({ name, email, section }) {
   const now = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
-  const text = `📋 *Alumno conectado*\n👤 ${name}\n📧 ${email}\n🕐 ${now}`
+  const badge = section === 'BLUE' ? '🔵' : '🔴'
+  const text = `📋 *Alumno conectado*\n👤 ${name}\n📧 ${email}\n${badge} 9° ${section}\n🕐 ${now}`
 
   // Fire-and-forget with 3 retries — never blocks login, never crashes the app
   withRetry(() =>
@@ -189,9 +190,10 @@ export function sendLoginNotification({ name, email }) {
   ).catch(() => {/* silent — login still works */})
 }
 
-export async function sendToTelegram({ name, email, pctDisplay, breakdown, reflections, pdfBlob }) {
+export async function sendToTelegram({ name, email, section, pctDisplay, breakdown, reflections, pdfBlob }) {
   const filename = `CBF_Workshop_${name.replace(/\s+/g, '_')}.pdf`
-  const caption = `📚 *CBF Workshop*\n👤 ${name}\n📧 ${email}\n📊 ${pctDisplay}\n• Word Search: ${breakdown.wsFound}/${breakdown.wsTotal}\n• Reading: ${breakdown.rdCorrect ?? 0}/${breakdown.rdTotal ?? 0}\n• Fill-in: ${breakdown.fiCorrect}/${breakdown.fiTotal}\n• MCQ: ${breakdown.mcqCorrect}/${breakdown.mcqTotal}`
+  const badge = section === 'BLUE' ? '🔵' : '🔴'
+  const caption = `📚 *CBF Workshop Entregado*\n👤 ${name}\n📧 ${email}\n${badge} 9° ${section}\n📊 ${pctDisplay}\n• Word Search: ${breakdown.wsFound}/${breakdown.wsTotal}\n• Reading: ${breakdown.rdCorrect ?? 0}/${breakdown.rdTotal ?? 0}\n• Fill-in: ${breakdown.fiCorrect}/${breakdown.fiTotal}\n• MCQ: ${breakdown.mcqCorrect}/${breakdown.mcqTotal}`
 
   await withRetry(async () => {
     const form = new FormData()

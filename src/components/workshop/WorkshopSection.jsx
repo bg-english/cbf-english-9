@@ -81,6 +81,7 @@ export default function WorkshopSection({ user }) {
       await sendToTelegram({
         name: user.name,
         email: user.email,
+        section: user.section,
         pctDisplay: `${pct}% (${total}/${max})`,
         breakdown,
         reflections,

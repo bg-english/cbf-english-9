@@ -16,16 +16,16 @@ export default function LoginGate({ onLogin }) {
     const val = e.target.value
     setEmail(val)
     setError('')
-    const name = roster[val.trim().toLowerCase()]
-    setMatched(name || null)
+    const entry = roster[val.trim().toLowerCase()]
+    setMatched(entry || null)
   }
 
   const doLogin = () => {
     const key = email.trim().toLowerCase()
-    const name = roster[key]
-    if (!name) { setError('That email is not registered in 9° RED. Please check and try again.'); return }
-    sendLoginNotification({ name, email: key })
-    onLogin({ name, email: key })
+    const entry = roster[key]
+    if (!entry) { setError('That email is not registered in 9° RED or BLUE. Please check and try again.'); return }
+    sendLoginNotification({ name: entry.name, email: key, section: entry.section })
+    onLogin({ name: entry.name, email: key, section: entry.section })
   }
 
   const onKey = (e) => { if (e.key === 'Enter') doLogin() }
@@ -203,8 +203,8 @@ export default function LoginGate({ onLogin }) {
               }}>
                 <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg,#27AE60,#1a6e3a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem', flexShrink: 0 }}>👤</div>
                 <div>
-                  <div style={{ fontWeight: 700, color: '#1a6e3a', fontSize: '0.92rem' }}>{matched}</div>
-                  <div style={{ fontSize: '0.74rem', color: '#2e8b57' }}>{email}</div>
+                  <div style={{ fontWeight: 700, color: '#1a6e3a', fontSize: '0.92rem' }}>{matched.name}</div>
+                  <div style={{ fontSize: '0.74rem', color: '#2e8b57' }}>{email} · 9° {matched.section}</div>
                 </div>
                 <div style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>✅</div>
               </div>
