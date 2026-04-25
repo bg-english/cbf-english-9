@@ -191,7 +191,7 @@ export function sendLoginNotification({ name, email }) {
 
 export async function sendToTelegram({ name, email, pctDisplay, breakdown, reflections, pdfBlob }) {
   const filename = `CBF_Workshop_${name.replace(/\s+/g, '_')}.pdf`
-  const caption = `📚 *CBF Workshop*\n👤 ${name}\n📧 ${email}\n📊 ${pctDisplay}\n• Fill-in: ${breakdown.fiCorrect}/${breakdown.fiTotal}\n• MCQ: ${breakdown.mcqCorrect}/${breakdown.mcqTotal}\n• Word Search: ${breakdown.wsFound}/${breakdown.wsTotal}`
+  const caption = `📚 *CBF Workshop*\n👤 ${name}\n📧 ${email}\n📊 ${pctDisplay}\n• Word Search: ${breakdown.wsFound}/${breakdown.wsTotal}\n• Reading: ${breakdown.rdCorrect ?? 0}/${breakdown.rdTotal ?? 0}\n• Fill-in: ${breakdown.fiCorrect}/${breakdown.fiTotal}\n• MCQ: ${breakdown.mcqCorrect}/${breakdown.mcqTotal}`
 
   await withRetry(async () => {
     const form = new FormData()

@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import WordSearch from './WordSearch.jsx'
+import Crossword from './Crossword.jsx'
 import FillIn from './FillIn.jsx'
 import FinalMCQ from './FinalMCQ.jsx'
 import Reflection from './Reflection.jsx'
+import ReadingActivity from '../shared/ReadingActivity.jsx'
 import { WS_WORDS, fillInItems, workshopMCQ } from '../../data/workshop.js'
+import { workshopReading } from '../../data/readings.js'
 import { generatePDF, sendToTelegram } from '../../hooks/usePDF.js'
 import { TEACHER_EMAIL } from '../../data/config.js'
 
@@ -23,6 +26,7 @@ export default function WorkshopSection({ user }) {
   const [wsFound, setWsFound] = useState(0)
   const [fiScore, setFiScore] = useState(null)
   const [mcqScore, setMcqScore] = useState(null)
+  const [readingScore, setReadingScore] = useState(null)
   const [reflections, setReflections] = useState(['', '', ''])
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -37,8 +41,9 @@ export default function WorkshopSection({ user }) {
 
     const fiCorrect = fiScore?.correct ?? 0
     const mcqCorrect = mcqScore?.correct ?? 0
-    const total = fiCorrect + mcqCorrect + wsFound
-    const max = fillInItems.length + workshopMCQ.length + WS_WORDS.length
+    const rdCorrect = readingScore?.correct ?? 0
+    const total = fiCorrect + mcqCorrect + wsFound + rdCorrect
+    const max = fillInItems.length + workshopMCQ.length + WS_WORDS.length + workshopReading.questions.length
     const pct = Math.round((total / max) * 100)
     setFinalPct(pct)
 
@@ -46,6 +51,7 @@ export default function WorkshopSection({ user }) {
       fiCorrect, fiTotal: fillInItems.length,
       mcqCorrect, mcqTotal: workshopMCQ.length,
       wsFound, wsTotal: WS_WORDS.length,
+      rdCorrect, rdTotal: workshopReading.questions.length,
     }
 
     const filename = `CBF_Workshop_${user.name.replace(/\s+/g, '_')}.pdf`
@@ -122,15 +128,30 @@ export default function WorkshopSection({ user }) {
         <WordSearch words={WS_WORDS} onProgress={n => setWsFound(n)} />
       </SectionCard>
 
-      <SectionCard number="2" title="Grammar Fill-in · Choose the correct verb form">
+      <SectionCard number="2" title="Crossword · Units 2 & 3 Vocabulary">
+        <p style={{ color: '#7A7A7A', fontSize: '0.84rem', marginBottom: '1rem' }}>
+          Click a cell to select it · Click again to switch direction · Use arrow keys to navigate
+        </p>
+        <Crossword />
+      </SectionCard>
+
+      <SectionCard number="3" title="Reading Comprehension · The Right Candidate">
+        <ReadingActivity
+          reading={workshopReading}
+          accentColor="#CC2936"
+          onScore={s => setReadingScore(s)}
+        />
+      </SectionCard>
+
+      <SectionCard number="4" title="Grammar Fill-in · Choose the correct verb form">
         <FillIn onScore={s => setFiScore(s)} />
       </SectionCard>
 
-      <SectionCard number="3" title="Biblical Reflection · Open-ended questions in English">
+      <SectionCard number="5" title="Biblical Reflection · Open-ended questions in English">
         <Reflection onChange={setReflections} />
       </SectionCard>
 
-      <SectionCard number="4" title="Final Multiple Choice · All three units">
+      <SectionCard number="6" title="Final Multiple Choice · All three units">
         <FinalMCQ onScore={s => setMcqScore(s)} />
       </SectionCard>
 

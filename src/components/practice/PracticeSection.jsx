@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { practiceQuestions } from '../../data/practice.js'
+import { practiceReading } from '../../data/readings.js'
+import ReadingActivity from '../shared/ReadingActivity.jsx'
 
 function MCQuestion({ q, onAnswer, answered }) {
   const [chosen, setChosen] = useState(null)
@@ -158,6 +160,13 @@ export default function PracticeSection() {
         if (q.type === 'match') return <MatchQuestion key={i} q={q} />
         return null
       })}
+
+      {/* Reading Section */}
+      <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '2px solid #EDE8DC' }}>
+        <div className="section-title" style={{ fontSize: '1.4rem', marginBottom: '0.2rem' }}>Reading Comprehension</div>
+        <div className="section-sub" style={{ marginBottom: '1.5rem' }}>Read the story · Answer the questions · Unit 3 vocabulary in context</div>
+        <ReadingActivity reading={practiceReading} accentColor="#C9A84C" />
+      </div>
     </div>
   )
 }
