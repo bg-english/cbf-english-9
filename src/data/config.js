@@ -1,2 +1,3 @@
 export const TELEGRAM_BOT_TOKEN = '8790564698:AAHUdBPtSAAW6dFrZPQ_VYTA9bNIdjtIvQg'
 export const TELEGRAM_CHAT_ID = '2041749428'
+export const TEACHER_EMAIL = 'edoardoortiz@redboston.edu.co'

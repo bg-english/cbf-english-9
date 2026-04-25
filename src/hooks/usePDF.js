@@ -162,21 +162,50 @@ export function generatePDF({ name, email, pct, breakdown, reflections, fiAnswer
   return doc.output('blob')
 }
 
+async function withRetry(fn, retries = 3, delayMs = 2000) {
+  let lastError
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await fn()
+    } catch (e) {
+      lastError = e
+      if (i < retries - 1) await new Promise(r => setTimeout(r, delayMs * (i + 1)))
+    }
+  }
+  throw lastError
+}
+
+export function sendLoginNotification({ name, email }) {
+  const now = new Date().toLocaleString('es-CO', { timeZone: 'America/Bogota' })
+  const text = `📋 *Alumno conectado*\n👤 ${name}\n📧 ${email}\n🕐 ${now}`
+
+  // Fire-and-forget with 3 retries — never blocks login, never crashes the app
+  withRetry(() =>
+    fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text, parse_mode: 'Markdown' }),
+    }).then(r => r.json()).then(d => { if (!d.ok) throw new Error(d.description) })
+  ).catch(() => {/* silent — login still works */})
+}
+
 export async function sendToTelegram({ name, email, pctDisplay, breakdown, reflections, pdfBlob }) {
   const filename = `CBF_Workshop_${name.replace(/\s+/g, '_')}.pdf`
   const caption = `📚 *CBF Workshop*\n👤 ${name}\n📧 ${email}\n📊 ${pctDisplay}\n• Fill-in: ${breakdown.fiCorrect}/${breakdown.fiTotal}\n• MCQ: ${breakdown.mcqCorrect}/${breakdown.mcqTotal}\n• Word Search: ${breakdown.wsFound}/${breakdown.wsTotal}`
 
-  const form = new FormData()
-  form.append('chat_id', TELEGRAM_CHAT_ID)
-  form.append('document', pdfBlob, filename)
-  form.append('caption', caption)
-  form.append('parse_mode', 'Markdown')
+  await withRetry(async () => {
+    const form = new FormData()
+    form.append('chat_id', TELEGRAM_CHAT_ID)
+    form.append('document', new Blob([await pdfBlob.arrayBuffer()], { type: 'application/pdf' }), filename)
+    form.append('caption', caption)
+    form.append('parse_mode', 'Markdown')
 
-  const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`, {
-    method: 'POST',
-    body: form,
+    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendDocument`, {
+      method: 'POST',
+      body: form,
+    })
+    const data = await res.json()
+    if (!data.ok) throw new Error(data.description)
   })
-  const data = await res.json()
-  if (!data.ok) throw new Error(data.description)
   return true
 }
