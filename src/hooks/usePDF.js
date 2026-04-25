@@ -12,7 +12,7 @@ const white = [255, 255, 255]
 const gray = [130, 130, 130]
 const W = 210, M = 18
 
-export function generatePDF({ name, email, pct, breakdown, reflections, fiAnswers, mcqAnswers }) {
+export function generatePDF({ name, email, section = 'RED', pct, breakdown, reflections, fiAnswers, mcqAnswers }) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   let y = 0
 
@@ -31,7 +31,7 @@ export function generatePDF({ name, email, pct, breakdown, reflections, fiAnswer
   doc.setFillColor(...navy); doc.rect(0, 0, W, 85, 'F')
   doc.setFillColor(...gold); doc.rect(0, 85, W, 2, 'F')
   doc.setTextColor(...white); doc.setFontSize(8.5); doc.setFont('helvetica', 'normal')
-  doc.text('COLEGIO BOSTON FLEXIBLE · 9TH GRADE RED · 2026', W/2, 18, { align: 'center' })
+  doc.text(`COLEGIO BOSTON FLEXIBLE · 9TH GRADE ${section} · 2026`, W/2, 18, { align: 'center' })
   doc.setFontSize(24); doc.setFont('helvetica', 'bold')
   doc.text('Workshop Results', W/2, 34, { align: 'center' })
   doc.setFontSize(11); doc.setFont('helvetica', 'normal')
@@ -51,21 +51,22 @@ export function generatePDF({ name, email, pct, breakdown, reflections, fiAnswer
   const grade = pct >= 80 ? 'Excellent!' : pct >= 60 ? 'Good work!' : 'Keep going!'
   doc.text(grade, W/2, 132, { align: 'center' })
 
-  // Breakdown boxes
+  // Breakdown boxes (5 activities)
   y = 142
   const boxes = [
     { label: 'WORD SEARCH', val: `${breakdown.wsFound}/${breakdown.wsTotal}` },
+    { label: 'READING', val: `${breakdown.rdCorrect ?? 0}/${breakdown.rdTotal ?? 0}` },
     { label: 'FILL-IN', val: `${breakdown.fiCorrect}/${breakdown.fiTotal}` },
     { label: 'FINAL MCQ', val: `${breakdown.mcqCorrect}/${breakdown.mcqTotal}` },
     { label: 'SCORE', val: `${pct}%` },
   ]
-  const bw = (W - M*2 - 9) / 4
+  const bw = (W - M*2 - 12) / 5
   boxes.forEach((b, i) => {
     const bx = M + i * (bw + 3)
     doc.setFillColor(...cream); doc.roundedRect(bx, y, bw, 22, 2, 2, 'F')
-    doc.setFontSize(6.5); doc.setTextColor(...gray); doc.setFont('helvetica', 'normal')
+    doc.setFontSize(6); doc.setTextColor(...gray); doc.setFont('helvetica', 'normal')
     doc.text(b.label, bx + bw/2, y + 7, { align: 'center' })
-    doc.setFontSize(13); doc.setTextColor(...navy); doc.setFont('helvetica', 'bold')
+    doc.setFontSize(12); doc.setTextColor(...navy); doc.setFont('helvetica', 'bold')
     doc.text(b.val, bx + bw/2, y + 16, { align: 'center' })
   })
 

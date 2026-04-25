@@ -57,23 +57,35 @@ export default function WorkshopSection({ user }) {
     const filename = `CBF_Workshop_${user.name.replace(/\s+/g, '_')}.pdf`
     setPdfFilename(filename)
 
-    const pdfBlob = generatePDF({
-      name: user.name,
-      email: user.email,
-      pct,
-      breakdown,
-      reflections,
-      fiAnswers: fiScore?.answers,
-      mcqAnswers: mcqScore?.answers,
-    })
+    let pdfBlob
+    try {
+      pdfBlob = generatePDF({
+        name: user.name,
+        email: user.email,
+        section: user.section,
+        pct,
+        breakdown,
+        reflections,
+        fiAnswers: fiScore?.answers,
+        mcqAnswers: mcqScore?.answers,
+      })
 
-    // Always download PDF for the student
-    const url = URL.createObjectURL(pdfBlob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = filename
-    a.click()
-    setTimeout(() => URL.revokeObjectURL(url), 5000)
+      // Trigger download — append to body for Safari/iOS compatibility
+      const url = URL.createObjectURL(pdfBlob)
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = url
+      a.download = filename
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      setTimeout(() => URL.revokeObjectURL(url), 5000)
+    } catch (pdfErr) {
+      console.error('PDF generation failed:', pdfErr)
+      setSubmitting(false)
+      alert('⚠️ Could not generate your PDF. Please take a screenshot of your results and email it to your teacher.')
+      return
+    }
 
     // Try to send to Telegram
     let tgOk = false
