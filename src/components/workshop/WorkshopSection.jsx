@@ -136,7 +136,7 @@ export default function WorkshopSection({ user }) {
         <Crossword />
       </SectionCard>
 
-      <SectionCard number="3" title="Reading Comprehension · The Right Candidate">
+      <SectionCard number="3" title="Reading Comprehension · Vocabulary #2">
         <ReadingActivity
           reading={workshopReading}
           accentColor="#CC2936"

@@ -12,32 +12,32 @@ export const CROSSWORD_WORDS = [
   {
     num: 1, dir: 'across', row: 0, col: 0, word: 'BUZZ',
     clue: 'Informal word for excitement or talk about something popular',
-    unit: 3,
+    unit: '#3',
   },
   {
     num: 2, dir: 'down', row: 2, col: 0, word: 'SPREAD',
     clue: 'To extend over a large area and reach more and more people',
-    unit: 3,
+    unit: '#3',
   },
   {
     num: 3, dir: 'across', row: 2, col: 1, word: 'CATCHY',
     clue: 'Instantly appealing and easy to remember',
-    unit: 3,
+    unit: '#3',
   },
   {
     num: 3, dir: 'down', row: 2, col: 1, word: 'CONFIDENT',
     clue: 'Feeling certain about your own abilities; self-assured',
-    unit: 2,
+    unit: '#2',
   },
   {
     num: 4, dir: 'across', row: 3, col: 0, word: 'POLITE',
     clue: 'Having good manners and showing respect for others',
-    unit: 2,
+    unit: '#2',
   },
   {
     num: 5, dir: 'across', row: 10, col: 1, word: 'TRENDY',
     clue: 'Very fashionable and up-to-date; following the latest trends',
-    unit: 3,
+    unit: '#3',
   },
 ]
 

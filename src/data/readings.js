@@ -4,7 +4,7 @@
 export const practiceReading = {
   title: 'The Viral Moment',
   subtitle: 'A story about trends, dogs, and unexpected fame',
-  tag: 'Unit 3 · Describing Trends',
+  tag: 'Vocabulary #3 · Reading',
   text: [
     {
       para: `Maya was just a regular 17-year-old when everything changed overnight. It started on a Tuesday — the most ordinary of days — when she posted a short clip of herself attempting to follow a **trendy** dance challenge she'd seen on social media. The video was nothing special, or so she thought. She wasn't even wearing anything **fashionable** — just an old hoodie and her brother's oversized sneakers.`,
@@ -81,7 +81,7 @@ export const practiceReading = {
 export const workshopReading = {
   title: 'The Right Candidate',
   subtitle: 'A teenager\'s first real interview — and what he discovered about himself',
-  tag: 'Unit 2 · The Right Candidate',
+  tag: 'Vocabulary #2 · Reading',
   text: [
     {
       para: `Daniel had prepared for this moment for two weeks. He had read articles about what makes a great job candidate, practiced answers in front of his mirror until midnight, and even ironed his shirt the night before — which, for a 16-year-old boy, was practically a miracle. His **ambition** wasn't loud or aggressive; it was quiet and steady, like a fire that doesn't go out.`,

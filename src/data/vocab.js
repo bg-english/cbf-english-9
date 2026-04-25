@@ -1,7 +1,7 @@
 export const units = [
   {
     id: 1,
-    label: 'Unit 1 · Dreams & Ambitions',
+    label: 'Vocabulary #1',
     emoji: '📘',
     description: '11 idiomatic expressions from Evolve 4, Unit 1. Master these to talk about goals, challenges, and success.',
     words: [
@@ -20,7 +20,7 @@ export const units = [
   },
   {
     id: 2,
-    label: 'Unit 2 · The Right Candidate',
+    label: 'Vocabulary #2',
     emoji: '💼',
     description: 'Key adjectives and qualities for professional and personal contexts. Essential for interviews and self-description.',
     words: [
@@ -50,7 +50,7 @@ export const units = [
   },
   {
     id: 3,
-    label: 'Unit 3 · Describing Trends',
+    label: 'Vocabulary #3',
     emoji: '📈',
     description: 'Expressions for talking about what\'s popular, viral, and fashionable. Perfect for social media and current events.',
     words: [

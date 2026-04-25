@@ -286,7 +286,7 @@ export default function Crossword({ onScore }) {
                 >
                   <span style={{ fontWeight: 700, color: '#1A2744', fontSize: '0.8rem', marginRight: '0.3rem' }}>{w.num}.</span>
                   <span style={{ fontSize: '0.8rem', color: '#4A4A4A' }}>{w.clue}</span>
-                  <span style={{ fontSize: '0.7rem', color: '#CC2936', marginLeft: '0.3rem' }}>· U{w.unit}</span>
+                  <span style={{ fontSize: '0.7rem', color: '#CC2936', marginLeft: '0.3rem' }}>· Vocab {w.unit}</span>
                 </div>
               )
             })}

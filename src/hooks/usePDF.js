@@ -35,7 +35,7 @@ export function generatePDF({ name, email, pct, breakdown, reflections, fiAnswer
   doc.setFontSize(24); doc.setFont('helvetica', 'bold')
   doc.text('Workshop Results', W/2, 34, { align: 'center' })
   doc.setFontSize(11); doc.setFont('helvetica', 'normal')
-  doc.text('Dreams & Ambitions · The Right Candidate · Describing Trends', W/2, 43, { align: 'center' })
+  doc.text('Vocabulary #1 · Vocabulary #2 · Vocabulary #3', W/2, 43, { align: 'center' })
   doc.setFontSize(11); doc.setTextColor(...gold)
   doc.text(name, W/2, 58, { align: 'center' })
   doc.setFontSize(8.5); doc.setTextColor(200, 200, 200)
